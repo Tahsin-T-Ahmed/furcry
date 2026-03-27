@@ -2,9 +2,11 @@ import streamlit as st
 
 st.header("Help Pets")
 st.space()
+
 posting_url = st.text_input(
     label = "Webpage URL (e.g, https://www.lostmydoggie.com/details.cfm?petid=473750)",
-    placeholder = "Paste URL here"
+    placeholder = "Paste URL here",
+    key = "poster_url"
 )
 
 def handle_urlscanbtn_click():
