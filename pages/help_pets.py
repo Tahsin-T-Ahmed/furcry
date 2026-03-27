@@ -22,19 +22,16 @@ def handle_urlscanbtn_click():
         st.session_state["url_warning"] = 'Enter a URL first! Then, click "Scan URL"'
         return
 
-url_btn_col, warning_col = st.columns([1, 6])
-with url_btn_col:
-    urlscanbtn = st.button(
-        label = "Scan URL",
-        type = "primary",
-        on_click = handle_urlscanbtn_click
-    )
+if (
+    "url_warning" in st.session_state
+    and
+    st.session_state["url_warning"]
+):
+    st.error(st.session_state["url_warning"])
+    st.session_state["url_warning"] = ""
 
-with warning_col:
-    if (
-        "url_warning" in st.session_state
-        and
-        st.session_state["url_warning"]
-    ):
-        st.error(st.session_state["url_warning"])
-        st.session_state["url_warning"] = ""
+urlscanbtn = st.button(
+    label = "Scan URL",
+    type = "primary",
+    on_click = handle_urlscanbtn_click
+)
