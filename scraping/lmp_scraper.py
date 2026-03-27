@@ -41,6 +41,12 @@ def scrape(url:str) -> dict:
 
         posting_info[key] = val
 
+        img_url_rel = dom.find("img", class_="center-block")["src"]
+        posting_info["IMG_URL"] = f"{url[:28]}/pet_images/{img_url_rel.split('/')[-1]}"
+
+        posting_info["PET NAME"] = posting_info["PET NAME"].split('(')[0]
+        posting_info["PET ID"] = url.split("petid=")[1]
+
     posting_info["URL"] = url
     return posting_info
 
