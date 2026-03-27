@@ -9,6 +9,9 @@ st.set_page_config(
 st.markdown("## :material/pets: Help Pets")
 st.space()
 
+if "poster_url" not in st.session_state:
+    st.session_state["poster_url"] = ""
+
 
 def handle_posting_url_entered():
     url = st.session_state["poster_url"].strip()
