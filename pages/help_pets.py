@@ -35,5 +35,6 @@ with warning_col:
         "url_warning" in st.session_state
         and
         st.session_state["url_warning"]
-        ):
+    ):
         st.error(st.session_state["url_warning"])
+        st.session_state["url_warning"] = ""
