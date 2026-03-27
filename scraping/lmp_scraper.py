@@ -6,26 +6,42 @@ def scrape(url:str) -> dict:
     if 200 != response.status_code:
         return f"Invalid response from server. Status code: {response.status_code}"
     
-    dom = BeautifulSoup(response.text, "html.parser")
+    dom = BeautifulSoup(response.text, "html.parser")    
+
+    posting_info = {}
+
+    section_heading = dom.find("div", class_="section-heading").text.strip().split(' ')
+
+    posting_info["TITLE"] = f"{' '.join(section_heading[:2])} in {' '.join(section_heading[2:])}"
 
     details_table = dom.find("table")
 
     rows = details_table.find_all("tr")
 
-    posting_info = {}
-
     for row in rows:
-        # continue
-        columns = row.find_all("td")
+        td_list = row.find_all("td")
 
-        key = columns[0].text
+        key = None
         val = None
 
-        if 2 == len(columns):
-            val = columns[1].text
+        if 2 == len(td_list):
+            key = td_list[0].text[:-1].upper()
+        elif 1 == len(td_list):
+            key = td_list[0].find("h5").text[:-1].upper()
+        else:
+            return "Error! Invalid webpage format."
 
-            posting_info[key] = val
+        match(key):
+            case "PET NAME" | "PET TYPE" | "PET BREED" | "PET COLOR" | "GENDER" | "DATE LOST" | "DATE FOUND":
+                val = td_list[1].text.strip()
+            case "PET DESCRIPTION" | "AREA LAST SEEN" | "AREA FOUND" | "CROSS STREETS":
+                val = td_list[0].find("p").text.strip()
+            case _:
+                continue
 
+        posting_info[key] = val
+
+    posting_info["URL"] = url
     return posting_info
 
 if "__main__" == __name__:
