@@ -31,4 +31,9 @@ with url_btn_col:
     )
 
 with warning_col:
-    st.error(st.session_state["url_warning"])
+    if (
+        "url_warning" in st.session_state
+        and
+        st.session_state["url_warning"]
+        ):
+        st.error(st.session_state["url_warning"])
