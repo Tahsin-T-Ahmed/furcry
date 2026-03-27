@@ -5,9 +5,9 @@ st.set_page_config(
     page_icon = ":material/pets:"
 )
 
-st.title("FurCry: Missing Pets Need You!")
+st.markdown("# :material/pets: FurCry: Missing Pets Need You!")
 
-st.divider()
+st.space()
 
 st.header("What is FurCry?")
 st.caption("""

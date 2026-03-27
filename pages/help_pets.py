@@ -5,7 +5,7 @@ st.set_page_config(
     page_icon = ":material/pets:"
 )
 
-st.header("Help Pets")
+st.markdown("## :material/pets: Help Pets")
 st.space()
 
 posting_url = st.text_input(
