@@ -44,5 +44,9 @@ urlscanbtn = st.button(
     on_click = handle_posting_url_entered
 )
 
+def display_scraped_info(scraping_results):
+    return scraping_results
+
+
 if "scraping_results" in st.session_state:
-    st.write(st.session_state["scraping_results"])
+    st.write(display_scraped_info(st.session_state["scraping_results"]))
