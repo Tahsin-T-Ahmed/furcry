@@ -1,5 +1,10 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title = "FurCry: Help Pets",
+    page_icon = ":material/pets:"
+)
+
 st.header("Help Pets")
 st.space()
 
