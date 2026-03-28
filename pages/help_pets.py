@@ -1,5 +1,6 @@
 import streamlit as st
 from scraping import lmp_scraper
+from utils import formatter
 
 st.set_page_config(
     page_title = "FurCry: Help Pets",
@@ -14,11 +15,22 @@ if "poster_url" not in st.session_state:
 
 
 def handle_posting_url_entered():
+    if "poster_url" not in st.session_state:
+        return
     url = st.session_state["poster_url"].strip()
 
     st.session_state["url_warning"] = ""
     if not url:
         st.session_state["url_warning"] = 'Enter a URL first! Then, click "Scan URL"'
+        return
+    
+    if (
+        "lostmydoggie.com" not in url
+        and
+        "lostmykitty.com" not in url
+    ):
+        # return f"Error! Invalid URL: {url}"
+        st.session_state["url_warning"] = f"Invalid URL: {url}"
         return
 
     st.session_state["scraping_results"] = lmp_scraper.scrape(url)
@@ -45,8 +57,8 @@ urlscanbtn = st.button(
 )
 
 def display_scraped_info(scraping_results):
-    return scraping_results
+    formatter.format(scraping_results)
 
 
 if "scraping_results" in st.session_state:
-    st.write(display_scraped_info(st.session_state["scraping_results"]))
+    display_scraped_info(st.session_state["scraping_results"])
