@@ -12,9 +12,9 @@ def format(results:dict):
             val = results[key]
 
             match(key):
-                case "IMG_URL" | "PET ID" | "PET TYPE":
+                case "IMG_URL" | "ID" | "TYPE":
                     continue
-                case "PET NAME":
+                case "NAME":
                     val = f'"{val}"'
                 case "TITLE":
                     st.subheader(val)

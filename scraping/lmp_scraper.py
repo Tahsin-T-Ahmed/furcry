@@ -31,10 +31,13 @@ def scrape(url:str) -> dict:
         else:
             return "Error! Invalid webpage format."
 
+        if "PET " in key:
+            key = key.split(' ')[1]
+
         match(key):
-            case "PET NAME" | "PET TYPE" | "PET BREED" | "PET COLOR" | "GENDER" | "DATE LOST" | "DATE FOUND":
+            case "NAME" | "TYPE" | "BREED" | "COLOR" | "GENDER" | "DATE LOST" | "DATE FOUND":
                 val = td_list[1].text.strip()
-            case "PET DESCRIPTION" | "AREA LAST SEEN" | "AREA FOUND" | "CROSS STREETS":
+            case "DESCRIPTION" | "AREA LAST SEEN" | "AREA FOUND" | "CROSS STREETS":
                 val = td_list[0].find("p").text.strip()
             case _:
                 continue
@@ -44,8 +47,8 @@ def scrape(url:str) -> dict:
         img_url_rel = dom.find("img", class_="center-block")["src"]
         posting_info["IMG_URL"] = f"{url[:28]}/pet_images/{img_url_rel.split('/')[-1]}"
 
-        posting_info["PET NAME"] = posting_info["PET NAME"].split('(')[0]
-        posting_info["PET ID"] = url.split("petid=")[1]
+        posting_info["NAME"] = posting_info["NAME"].split('(')[0]
+        posting_info["ID"] = url.split("petid=")[1]
 
     posting_info["URL"] = url
     return posting_info
