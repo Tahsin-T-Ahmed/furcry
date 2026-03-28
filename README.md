@@ -1,4 +1,6 @@
-# FurCry
+# [FurCry](https://furcry.streamlit.app/)
+
+https://furcry.streamlit.app/
 
 FurCry is a Python web application that streamlines the process of spreading awareness about lost and found pets. The app lets a user paste a URL of a webpage containing information about a missing pet and then extracts and displays that information in a neat, shareable format so it can be quickly posted to multiple platforms.
 
