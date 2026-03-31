@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import streamlit as st
 
 def scrape(url:str) -> dict:
     url = url.strip()
