@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 def scrape(url:str) -> dict:
+    url = url.strip()
     response = requests.get(url)
     if 200 != response.status_code:
         return f"Invalid response from server. Status code: {response.status_code}"
