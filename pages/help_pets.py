@@ -1,5 +1,5 @@
 import streamlit as st
-from scraping import lmp_scraper
+from scraping import lmp_scraper, pll_scraper
 
 st.set_page_config(
     page_title = "FurCry: Help Pets",
@@ -29,6 +29,10 @@ def handle_posting_url_entered():
         "lostmykitty.com" in url
     ):
         st.session_state["scraping_results"] = lmp_scraper.scrape(url)
+        return
+    
+    if ("petcolove.org" in url):
+        st.session_state["scraping_results"] = pll_scraper.scrape(url)
         return
     
     st.session_state["url_warning"] = f"Invalid URL: {url}"
