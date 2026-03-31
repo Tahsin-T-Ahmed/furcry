@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import streamlit as st
 
 def scrape(url:str) -> dict:
     url = url.strip()
@@ -53,6 +54,27 @@ def scrape(url:str) -> dict:
 
     posting_info["URL"] = url
     return posting_info
+
+@st.cache_data
+def format(results:dict):
+    lcol, rcol = st.columns([3, 2])
+    with rcol:
+        st.image(results["IMG_URL"])
+
+    with lcol:
+        for key in results:
+
+            val = results[key]
+
+            match(key):
+                case "IMG_URL" | "ID" | "TYPE":
+                    continue
+                case "TITLE":
+                    st.subheader(val)
+                    continue
+                case _:
+                    pass
+            st.write(f"{key}: {val}")
 
 if "__main__" == __name__:
     url = input("Enter a URL:")
