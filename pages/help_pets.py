@@ -33,14 +33,11 @@ def handle_posting_url_entered():
     
     st.session_state["url_warning"] = f"Invalid URL: {url}"
     return
-
-    
     
 posting_url = st.text_input(
     label = "Webpage URL",
     placeholder = "https://www.lostmydoggie.com/details.cfm?petid=473750",
-    key = "poster_url",
-    on_change = handle_posting_url_entered
+    key = "poster_url"
 )
 
 if (
@@ -58,7 +55,7 @@ urlscanbtn = st.button(
 )
 
 def display_scraped_info(scraping_results):
-    lmp_scraper.format(scraping_results)
+    st.write(scraping_results)
 
 
 if "scraping_results" in st.session_state:
