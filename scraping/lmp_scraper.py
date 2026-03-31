@@ -37,7 +37,7 @@ def scrape(url:str) -> dict:
             key = key.split(' ')[1]
 
         match(key):
-            case "NAME" | "TYPE" | "BREED" | "COLOR" | "GENDER" | "DATE LOST" | "DATE FOUND":
+            case "NAME" | "BREED" | "COLOR" | "GENDER" | "DATE LOST" | "DATE FOUND":
                 val = td_list[1].text.strip()
             case "DESCRIPTION" | "AREA LAST SEEN" | "AREA FOUND" | "CROSS STREETS":
                 val = td_list[0].find("p").text.strip()
@@ -47,34 +47,14 @@ def scrape(url:str) -> dict:
         posting_info[key] = val
 
         img_url_rel = dom.find("img", class_="center-block")["src"]
-        posting_info["IMG_URL"] = f"{url[:28]}/pet_images/{img_url_rel.split('/')[-1]}"
+        img_url = f"{url[:28]}/pet_images/{img_url_rel.split('/')[-1]}"
+        posting_info["IMG_URLS"] = []
+        posting_info["IMG_URLS"].append(img_url)
 
         posting_info["NAME"] = posting_info["NAME"].split('(')[0]
-        posting_info["ID"] = url.split("petid=")[1]
 
-    posting_info["URL"] = url
+    posting_info["WEBPAGE"] = url
     return posting_info
-
-@st.cache_data
-def format(results:dict):
-    lcol, rcol = st.columns([3, 2])
-    with rcol:
-        st.image(results["IMG_URL"])
-
-    with lcol:
-        for key in results:
-
-            val = results[key]
-
-            match(key):
-                case "IMG_URL" | "ID" | "TYPE":
-                    continue
-                case "TITLE":
-                    st.subheader(val)
-                    continue
-                case _:
-                    pass
-            st.write(f"{key}: {val}")
 
 if "__main__" == __name__:
     url = input("Enter a URL:")
