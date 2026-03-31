@@ -1,6 +1,5 @@
 import streamlit as st
 from scraping import lmp_scraper
-from utils import formatter
 
 st.set_page_config(
     page_title = "FurCry: Help Pets",
@@ -25,15 +24,17 @@ def handle_posting_url_entered():
         return
     
     if (
-        "lostmydoggie.com" not in url
-        and
-        "lostmykitty.com" not in url
+        "lostmydoggie.com" in url
+        or
+        "lostmykitty.com" in url
     ):
-        # return f"Error! Invalid URL: {url}"
-        st.session_state["url_warning"] = f"Invalid URL: {url}"
+        st.session_state["scraping_results"] = lmp_scraper.scrape(url)
         return
+    
+    st.session_state["url_warning"] = f"Invalid URL: {url}"
+    return
 
-    st.session_state["scraping_results"] = lmp_scraper.scrape(url)
+    
     
 posting_url = st.text_input(
     label = "Webpage URL",
@@ -57,7 +58,7 @@ urlscanbtn = st.button(
 )
 
 def display_scraped_info(scraping_results):
-    formatter.format(scraping_results)
+    lmp_scraper.format(scraping_results)
 
 
 if "scraping_results" in st.session_state:
